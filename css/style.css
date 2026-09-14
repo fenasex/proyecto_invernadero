@@ -1,0 +1,66 @@
+body {
+font-family: Arial, sans-serif;
+background-color: #eaf7ea;
+margin: 0;
+}
+
+.navbar {
+background-color: #4caf50;
+color: white;
+padding: 15px;
+}
+
+.navbar .logo {
+font-size: 20px;
+font-weight: bold;
+}
+
+.nav-links a {
+color: white;
+margin-right: 15px;
+text-decoration: none;
+}
+
+.nav-links a:hover {
+text-decoration: underline;
+}
+
+.dashboard {
+padding: 20px;
+}
+
+.dashboard h1 {
+color: #2e7d32;
+}
+
+.tarjetas {
+display: flex;
+gap: 20px;
+margin-top: 20px;
+}
+
+.tarjeta {
+background-color: white;
+border: 2px solid #4caf50;
+border-radius: 8px;
+padding: 20px;
+width: 150px;
+text-align: center;
+}
+
+.tarjeta .numero {
+font-size: 30px;
+font-weight: bold;
+color: #2e7d32;
+display: block;
+}
+
+.tarjeta .etiqueta {
+color: #555;
+}
+
+@media (max-width: 600px) {
+.tarjetas {
+flex-direction: column;
+}
+}
