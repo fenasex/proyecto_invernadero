@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador - Invernadero</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+       
+        body {
+            background-color: #ffffff00; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.pexels.com/photos/580900/pexels-photo-580900.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .barra-verde {
+            background-color: #a0cc5ab6;
+            height: 60px;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #a0cc5a;
+        }
+
+        .titulo-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+           
+           
+        }
+
+        /* aca estan las tablas de navegacion */
+        .tablas {
+            display: flex;
+            height: 100%;
+        }
+
+        .tablas a {
+            text-decoration: none;
+            color: #333;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            border-left: 1px solid #00000000; /* Líneas divisorias (seteadas a 0 pero se puede editar) */
+            border-right: 1px solid #00000000;
+            transition: background-color 0.2s;
+        }
+
+        .tablas a:hover {
+            background-color: #ffffff40;
+        }
+
+        .tablas a.active {
+            background-color: #ffffff; /* Pestaña activa blanca de inicio (de momento hardcodeada por la vista de inicio) */
+            font-weight: bold;
+        }
+
+        /* Botón de cierre de sesión */
+        .btn-titulo {
+            background-color: #f7e27e; 
+            border: 1px solid #d4b63e;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .btn-titulo:hover {
+            background-color: #e0c95a;
+        }
+
+        /* --- CONTENIDO PRINCIPAL (Tarjetas) --- */
+        .barra-principal {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Centra verticalmente */
+            gap: 30px; /* aca para modificar el espacio entre tarjetas */
+            padding: 60px 40px;
+            flex-wrap: wrap; /* Para que bajen si la pantalla es chica */
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Estilo de las tarjetas */
+        .targeta {
+            flex: 1; 
+            min-width: 300px;
+            height: 450px; 
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+            border-radius: 4px; /* igual q en main para redondear los bordes */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Colores de las tarjetas */
+        .targeta-usuarios {
+            background-color: #f7a8a8a6; 
+        }
+
+        .targeta-registros {
+            background-color: #cbe6a08a; 
+        }
+
+        .targeta-metricas {
+            background-color: #9ecbf585; 
+        }
+
+        .targeta h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            border-bottom: 1px solid #00000033; /* Línea divisoria sutil */
+            padding-bottom: 10px;
+        }
+
+        .targeta-content {
+            font-size: 16px;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Lista de cultivos (ejemplo placeholder) */
+        .targeta-content ul {
+            list-style-type: none;
+        }
+
+        .targeta-content ul li {
+            margin-bottom: 8px;
+        }
+
+       
+
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="barra-verde">
+            <!-- titulo-header a la izquierda -->
+            <div class="titulo-header">Invernadero</div>
+
+            <!-- Navegación central -->
+            <nav class="tablas">
+                <a href="#" class="active">Inicio</a>
+                <a href="cultivos.html">Cultivos</a>
+                <a href="#">Sensores</a>
+            </nav>
+
+            <!-- Botón de cierre a la derecha (lleva al main) -->
+            <a href="main.html" class="btn-titulo">Cierre de sesión</a>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR DE TARJETAS -->
+    <main class="barra-principal">
+        
+        <!-- Tarjeta 1: Usuarios -->
+        <div class="targeta targeta-usuarios">
+            <h3>Usuarios</h3>
+            <div class="targeta-content">
+                <ul>
+                    <li>Admin (Tú)</li>
+                    <li>Juan Pérez</li>
+                    <li>María López</li>
+                    <li>Carlos Ruiz</li>
+                    <li>---</li>
+                    <li>---</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2: Registros -->
+        <div class="targeta targeta-registros">
+            <h3>Registros</h3>
+            <div class="targeta-content">
+                <p><strong>Últimos accesos:</strong></p>
+                <ul>
+                    <li>10:00 - Admin</li>
+                    <li>09:45 - Juan</li>
+                    <li>08:30 - María</li>
+                    <li>---</li>
+                    <li>---</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3: Métricas / Eliminación -->
+        <div class="targeta targeta-metricas">
+            <h3>Métricas y Gestión</h3>
+            <div class="targeta-content">
+                <p>Eliminación y creación de usuarios y registros.</p>
+                <!-- Gráfico simple visual -->
+                <div class="chart-placeholder">
+                    <div class="chart-line"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>
