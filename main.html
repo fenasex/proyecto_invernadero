@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth; /* literalmente es pa q se vea fluido */
+        }
+
+         body {
+        background-color: #ffffff00; 
+    
+        /*  image URL solo */
+        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.pexels.com/photos/580900/pexels-photo-580900.jpeg');
+    
+        background-size: cover;       /* hace que la imagen este en toda la pagina */
+        background-position: center;  
+        background-repeat: no-repeat; /* esto es para que no se repita en bucle si no cubre */
+        background-attachment: fixed; /* mantiene la imagen fija al bajar */
+        }
+
+        header {
+            width: 100%;
+            position: sticky; /* esta madre es para que el coso verde se quede arriba al bajar */
+            top: 0;
+            z-index: 100;
+        }
+
+        .barra-verde {
+            background-color: #a0cc5ab6; /* el coso verde ajustes */
+            height: 60px;
+            border-bottom: 1px solid #a0cc5ab6;
+        }
+
+        .barra-gris { 
+            background-color: #ebebebc0;
+            height: 50px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* login */
+        /* usa 100vh para el ajusto del scroll */
+        .hero-section {
+            min-height: calc(100vh - 110px); /* 110px menos el 100vh para que el header quede nice */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+       
+        .login {
+            background-color: #ffffffbd;
+            border: 1px solid #ccccccc2;
+            width: 100%;
+            max-width: 350px;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .btn {
+            background-color: #e6e6e6c7;
+            border: 1px solid #adadadc5;
+            padding: 15px;
+            font-size: 24px;
+            color: #000;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #d4d4d4bb; /* el color que se ve al pasar el mause */
+        }
+
+        /* vista de scroll  */
+        .content-section {
+            padding: 80px 20px;
+            max-width: 900px;
+            color: #ffffff; /* color de las letras */
+            margin: 0 auto; /* esto es para que cada cuadrado este centrado */
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: normal;
+        }
+
+        /* placeholder gris */
+        .placeholder-box {
+            background-color: #e6e6e6;
+            width: 100%;
+            height: 300px; 
+            border-radius: 4px; /* ajustar aca para los bordes redondeados */
+        }
+
+        
+        .barra-verde-inferior {
+            background-color: #a0cc5ab6;
+            padding: 40px 20px;
+            margin-top: 50px;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        /* espaceado */
+        .spacer {
+            height: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- header visible -->
+    <header>
+        <div class="barra-verde">
+            <!-- en esta parte se puede poner el logo o titulo -->
+        </div>
+        <div class="barra-gris">
+            <span>SOBRE LA PÁGINA Y SERVICIOS</span>
+            <span>SOBRE LA PÁGINA Y SERVICIOS</span>
+        </div>
+    </header>
+
+    <!-- LOGIN  -->
+    <section class="hero-section">
+        <div class="login">
+            <button class="btn">Iniciar sesion</button>
+            <button class="btn">Registrarse</button>
+        </div>
+    </section>
+
+    <!-- sobre la pagina y servicios -->
+    <section class="content-section">
+        <h2 class="section-title">SOBRE LA PÁGINA Y SERVICIOS</h2>
+        <div class="placeholder-box"></div>
+    </section>
+
+    <!-- sobre nosotros -->
+    <section class="content-section">
+        <h2 class="section-title">SOBRE NOSOTROS</h2>
+        <div class="placeholder-box"></div>
+    </section>
+
+    <!-- barra verde inferior -->
+    <barra verde inferior class="barra verde inferior">
+        <p>CONTACTO</p>
+        <!-- barra verde inferior popner info aca (vacio de momento) -->
+    </barra verde inferior>
+<!--commit no funciona aaaa -->
+</body>
+</html>
