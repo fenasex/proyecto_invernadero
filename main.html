@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
+
 <head>
+
+    <!-- le metí alphinejs -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
     <style>
-        
+
+        /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+        /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+        /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -18,7 +30,7 @@
         }
 
          body {
-        background-color: #ffffff00; 
+        background-color: #ffffff00;
     
         /*  image URL solo */
         background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.pexels.com/photos/580900/pexels-photo-580900.jpeg');
@@ -28,6 +40,12 @@
         background-repeat: no-repeat; /* esto es para que no se repita en bucle si no cubre */
         background-attachment: fixed; /* mantiene la imagen fija al bajar */
         }
+
+
+
+         /* =================== header y barras d arriba =================== =================== =================== */
+
+
 
         header {
             width: 100%;
@@ -40,9 +58,50 @@
             background-color: #a0cc5ab6; /* el coso verde ajustes */
             height: 60px;
             border-bottom: 1px solid #a0cc5ab6;
+
+            /*Le metí blur a lo q pasa detrás de la barra gris y bara verde*/
+            backdrop-filter: blur(10px);
+
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+
         }
 
-        .barra-gris { 
+        /* ------------------- ------------------- ------------------- */
+
+        .logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            object-fit: cover; /* evita q la imagen se deforme*/
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-texto {
+            display: flex;
+            flex-direction: column; /* subtitulo queda debajo de titulo */
+            color: #ffffff;
+        }
+
+        .titulo-empresa {
+            font-size: 17px;
+            font-weight: bold;   /* en negrita */
+        }
+
+        .subtitulo-empresa {
+            font-size: 10px;
+        }
+
+        /* ------------------- ------------------- ------------------- */
+
+        .barra-gris {
+
             background-color: #ebebebc0;
             height: 50px;
             display: flex;
@@ -52,9 +111,28 @@
             font-size: 14px;
             text-transform: uppercase;
             font-weight: bold;
+
+            backdrop-filter: blur(10px);
         }
 
-        /* login */
+        .barra-gris a {
+            color: #346943;          /* hola color verde bonito a los links */
+            text-decoration: none;   /* chao surayado feo a los links*/
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+        .barra-gris a:hover {
+            background-color: rgb(141 165 157 / 0.5);
+            color: #122917;             /* texto casi negor */
+        }
+
+
+
+        /* =================== PAGINA COMO TAL =================== =================== ===================*/
+
+
+
         /* usa 100vh para el ajusto del scroll */
         .hero-section {
             min-height: calc(100vh - 110px); /* 110px menos el 100vh para que el header quede nice */
@@ -63,11 +141,12 @@
             align-items: center;
             padding: 20px;
         }
-
        
         .login {
-            background-color: #ffffffbd;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
             border: 1px solid #ccccccc2;
+            border-radius: 8px;
             width: 100%;
             max-width: 350px;
             padding: 60px 40px;
@@ -85,12 +164,117 @@
             color: #000;
             cursor: pointer;
             text-align: center;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            border-radius: 6px;
+            text-decoration: none;
+
+        }
+        .btn:hover {
+            background-color: rgb(175 175 175 / 0.73); /* el color que se ve al pasar el mause */
+
         }
 
-        .btn:hover {
-            background-color: #d4d4d4bb; /* el color que se ve al pasar el mause */
+        /* -------------------  */
+
+        .login-titulo {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
         }
+
+        /*apila los elementos del form */
+        .login-form {
+
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* contenedor individual*/
+        .input-group {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+
+        /*el texto q dice CORREO O USUARIO */
+        .input-group label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        /* la caja blanca donde se escribe*/
+        .input-group input {
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        /* botn */
+        .btn-login {
+            background-color: #346943;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-login:hover {
+            background-color: #24492e;
+        }
+
+        /* el de error */
+        .mensaje-login {
+            font-size: 12px;
+            color: #d32f2f;
+            text-align: center;
+        }
+
+        /* -------------------  */
+
+        .btn-registro {
+            background-color: #346943;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .btn-registro:hover {
+            background-color: #24492e;
+        }
+
+        .vistaDeRegistro-overlay {
+
+        }
+
+        .vistaDeRegistro-acciones {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+
+        }
+
+        .vistaDeRegistro-contenido {
+        padding: 20px;
+        text-align: center;
+
+
+        }
+
+        /* ------------------- ------------------- ------------------- */
 
         /* vista de scroll  */
         .content-section {
@@ -108,15 +292,30 @@
             font-weight: normal;
         }
 
-        /* placeholder gris */
+        /*caja donde se escribe*/
         .placeholder-box {
-            background-color: #e6e6e6;
-            width: 100%;
-            height: 300px; 
-            border-radius: 4px; /* ajustar aca para los bordes redondeados */
+            background-color: rgba(255, 255, 255, 0.8);   /* fondo algo transparente */
+            color: black;
+            padding: 35px;
+            border-radius: 8px;                           /*esquinas redondas */
+            border: 1px solid rgba(255, 255, 255, 0.3);   /* borde */
+            text-align: left;
+            line-height: 1.6;                             /*interlineado entre renglones */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            font-size: 16px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        
+
+
+        /*=================== parte de abajo (footer y tal) =================== =================== ===================*/
+
+
+
         .barra-verde-inferior {
             background-color: #a0cc5ab6;
             padding: 40px 20px;
@@ -124,55 +323,391 @@
             text-align: left;
             font-size: 12px;
             text-transform: uppercase;
+
+            color: white;
+
+            backdrop-filter: blur(4px);
         }
+
+        .footer-contenido {
+            justify-content: space-between;
+            max-width: 1200px;
+            display: flex;
+            width: 100%;
+            align-items: flex-start;
+            margin: 0 auto;
+            gap: 20px;
+
+            flex-wrap: wrap; /*segun vi esto es para q se vayan para abajo las cuestiones cuando la pagina se apachurre */
+
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column; /* hace q sean columnas (sorpresa) */
+            gap: 6px;
+            flex: 0 0 auto;
+            text-align: left;
+        }
+        .footer-col a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .footer-col a:hover {
+            text-decoration: underline;  /*subrayadodellink*/
+        }
+
+        .footer-copy {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.15); /* lña linea  de arriba q separa el copy */
+            font-size: 11px;
+        }
+
+        .footer-logo-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .footer-logo-texto {
+            display: flex;
+            flex-direction: column; /* subtitulo debajo del titulo */
+            justify-content: center; /* centrados respecto al logo */
+        }
+
+        .footer-titulo{
+            font-size: 24px
+        }
+
+        .footer-subtitulo {
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
+        /* ------------------- ------------------- ------------------- */
 
         /* espaceado */
         .spacer {
             height: 40px;
         }
 
+
+
+        /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+        /* ////////////////////////////////aca termina style por si acaso (q sino me pierdo perdon)////////////////////////////////// */
+        /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
     </style>
 </head>
 <body>
 
-    <!-- header visible -->
+
+
+    <!-- =================== =================== header =================== =================== -->
+
+
+
     <header>
         <div class="barra-verde">
-            <!-- en esta parte se puede poner el logo o titulo -->
+            <div class="logo-container">
+            <img src="img/logofeo.png" alt="Logo Bloom & Doom" class="logo-img">
+
+            <div class="logo-texto">
+                <span class="titulo-empresa">BLOOM & DOOM</span>
+                <span class="subtitulo-empresa">GESTOR DE INVERNADEROS</span>
+            </div>
+
+            </div>
         </div>
+
         <div class="barra-gris">
-            <span>PLACEHOLDER LOGO</span>
-            <span>SOBRE LA PÁGINA Y SERVICIOS</span>
+            <a href="#contacto">CONTACTO</a>
+            <a href="#preguntas-frecuentes">PREGUNTAS FRECUENTES</a>     <!--este se me ocurrio mirando la página del papajohns -->
+            <a href="#sobre-nosotros">SOBRE NOSOTROS</a>
+            <a href="#sobre-la-pagina-y-servicios">SOBRE LA PÁGINA Y SERVICIOS</a>
         </div>
     </header>
 
-    <!-- LOGIN  -->
-    <section class="hero-section">
-        <div class="login">
-            <button class="btn">Iniciar sesion</button>
-            <a href="admin.html" class="btn">Admin hardcodeado por ahora </a>
-            <a href="inicio_usuario.html" class="btn">Inicio de usuario hardcodeado por ahora</a>
-            <button class="btn">Registrarse</button>
-        </div>
-    </section>
 
-    <!-- sobre la pagina y servicios -->
-    <section class="content-section">
+
+    <!-- =================== =================== LA PAGINA COMO TAL =================== ===================  -->
+
+
+
+    <!-- login y registro -->
+    <section class="hero-section">
+
+        <div class="login" x-data="{
+        /*ok ya mira esto es lo de alpinejs
+         dclaracion de datos*/
+            usuarioInput: '',
+            claveInput: '',
+            error: false,
+
+        /*mas declaracion de datos, pero esto se usan para registro*/
+            vistaDeRegistro: false,
+            nuevoUsuarioInput: '',
+            nuevaClaveInput: '',
+            admin: false,
+            mensajeRegistro: '',
+
+    /*---------------------- funciones ------------------------*/
+
+        procesarLogin() {
+        /*creamos la variable encontrado y lo comparamos cn lo que se haya puesto en el form*/
+            const encontrado = usuarios.find(
+            u => u.nombreUsuario.toLowerCase() === this.usuarioInput.trim().toLowerCase() &&
+                 u.clave === this.claveInput );
+
+        /*si se ncuentra, lo mandamos para su pagina de admin o de usuario*/
+        if (encontrado) {
+            this.error = false;
+            window.location.href = encontrado.destino;
+                        }
+
+            else {
+            this.error = true; /*mensaje de error en rojo*/
+                }
+                        },
+
+
+
+    registrarUsuario(){
+
+    /*q no dejen campos vacíos*/
+    if (!this.nuevoUsuarioInput.trim() || !this.nuevaClaveInput.trim()) {
+        this.mensajeRegistro = 'Completa todos los campos';
+        return;}
+
+    /*si ya existe*/
+    const existe = usuarios.some(
+        u => u.nombreUsuario.toLowerCase() === this.nuevoUsuarioInput.trim().toLowerCase()
+    );
+
+    if (existe) {
+        this.mensajeRegistro = 'El nombre de usuario ya está registrado';
+        return;
+                }
+
+    /*nuevo objeto usuario*/
+    const nuevo = {
+        id: usuarios.length + 1,
+        nombreUsuario: this.nuevoUsuarioInput.trim(),
+        clave: this.nuevaClaveInput.trim(),
+        destino: this.admin ? 'admin.html' : 'inicio_usuario.html', /*elige vista*/
+        cultivos: [],
+        sensores: []
+                    };
+    usuarios.push(nuevo);
+
+    this.usuarioInput = this.nuevoUsuarioInput;
+    this.claveInput = this.nuevaClaveInput;
+    this.mensajeRegistro = 'Usuario registrado con éxito.';
+
+    setTimeout(() => {
+        this.vistaDeRegistro = false;         /*la cierra y ase reinicia todo si tarda mucho*/
+        this.nuevoUsuarioInput = '';
+        this.nuevaClaveInput = '';
+        this.admin = false;
+        this.mensajeRegistro = '';
+    }, 1200);
+}
+}">
+
+            <h2 class="login-titulo">INICIAR SESIÓN</h2>
+            <form class="login-form" @submit.prevent="procesarLogin()">
+
+                <!-- usuario -->
+                <div class="input-group">
+                    <label for="usuario">Correo o Usuario</label>
+                    <input type="text" id="usuario" x-model="usuarioInput" placeholder="Nombre" required>
+                </div>
+
+                <!-- clave -->
+                <div class="input-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" x-model="claveInput" placeholder="••••••••" required>
+                </div>
+
+                <!--txto para cuando se equivocan -->
+                <span id="mensaje-error" x-show="error" class="mensaje-login">Usuario o clave incorrecta</span>
+
+                <!-- boton -->
+                <button type="submit" class="btn-login">Ingresar</button>
+            </form>
+
+
+
+            <!--  REGISTRARSE -->
+            <div class="login-links" style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+                <button type="button" @click="vistaDeRegistro = true" id="btn-registrar" class="btn-registro">Regístrate aquí</button>
+
+                <div class="vistaDeRegistro-overlay" x-show="vistaDeRegistro"  style="display: none;">
+                    <div class="vistaDeRegistro-contenido" @click.outside="vistaDeRegistro = false">
+
+                        <h3>Registrar Usuario</h3>
+
+                        <form @submit.prevent="registrarUsuario()">
+                            <!-- usuario-->
+                            <div class="input-group">
+                                <label>Nuevo Usuario</label>
+                                <input type="text" x-model="nuevoUsuarioInput" placeholder="Nombre" required>
+                            </div>
+
+                            <!--cntraseña -->
+                            <div class="input-group">
+                                <label>Contraseña</label>
+                                <input type="password" x-model="nuevaClaveInput" placeholder="••••••••" required>
+                            </div>
+
+                            <!--rol-->
+                            <div class="input-group-checkbox" style="margin: 10px 0;">
+                                <label>
+                                    <input type="checkbox" x-model="admin">
+                                    ¿Es Administrador?
+                                </label>
+                            </div>
+
+                            <!-- mensaje  -->
+                            <span x-show="mensajeRegistro" class="mensaje-login" x-text="mensajeRegistro"></span>
+
+                            <!-- botones -->
+                            <div class="vistaDeRegistro-acciones">
+                                <button type="submit" class="btn-login">Guardar</button>
+                                <button type="button" class="btn" @click="vistaDeRegistro = false">Cancelar</button>
+                            </div>
+                        </form>
+                                                                                                    <!-- puchas q me quedo bonito si o que si o que si o lloro-->
+                    </div>
+                </div>
+
+              <!--     enlaces rapidos, innecesarios con el registro hacido                 -->
+              <!--     <a href="admin.html" class="btn">Admin hardcodeado</a>               -->
+              <!--     <a href="inicio_usuario.html" class="btn">Usuario hardcodeado</a>    -->
+
+              </div>
+
+          </div>
+      </section>
+
+
+
+      <!-- ------------------- ------------------- ------------------- -->
+
+    <!-- sobre la página y servicios -->
+    <section id="sobre-la-pagina-y-servicios" class="content-section">
         <h2 class="section-title">SOBRE LA PÁGINA Y SERVICIOS</h2>
-        <div class="placeholder-box"></div>
+        <div class="placeholder-box"><p>
+            <strong>BLOOM & DOOM</strong> es un sistema integral de monitoreo agrícola diseñado para optimizar el control de cultivos en invernaderos en tiempo real.
+        </p>
+            <p>
+                Nuestra plataforma permite supervisar variables críticas mediante sensores especializados (temperatura, humedad, riego y luz), ofreciendo métricas claras y paneles de gestión para maximizar la producción de tu invernadero.
+            </p></div>
     </section>
 
     <!-- sobre nosotros -->
-    <section class="content-section">
+    <section id="sobre-nosotros" class="content-section">
         <h2 class="section-title">SOBRE NOSOTROS</h2>
-        <div class="placeholder-box"></div>
+        <div class="placeholder-box">
+            <p>
+            Somos un equipo apasionado por el desarrollo agrotecnológico, enfocado en crear herramientas accesibles para el campo moderno.
+        </p>
+            <p>
+                Nuestra misión es conectar la tecnología de sensores inteligentes con la producción agrícola diaria, ayudando a optimizar el uso de recursos naturales y garantizando cosechas más saludables.
+            </p>
+        </div>
     </section>
 
-    <!-- barra verde inferior -->
-    <barra verde inferior class="barra verde inferior">
-        <p>CONTACTO</p>
-        <!-- barra verde inferior popner info aca (vacio de momento) -->
-    </barra verde inferior>
-<!--commit no funciona aaaa -->
-</body>
-</html>
+    <!-- preguntas frecuentes -->
+    <section id="preguntas-frecuentes" class="content-section">
+        <h2 class="section-title">PREGUTNAS FRECUENTES</h2>
+        <div class="placeholder-box">
+            <p>
+                <strong>¿Qué necesito para instalar el sistema en mi invernadero?</strong><br>
+                Solo necesitas contar con los sensores compatibles de nuestra gama y una conexión básica a red. Nuestro panel configurará el enlace automáticamente.
+            </p>
+            <p>
+                <strong>¿Puedo monitorear los datos desde mi teléfono?</strong><br>
+                Sí, la plataforma está completamente optimizada para acceder desde cualquier navegador web en celulares, tablets o computadores.
+            </p>
+        </div>
+    </section>
+
+
+
+  <!-- =================== =================== barra verde inferior =================== =================== -->
+
+
+
+    <footer id="contacto" class="barra-verde-inferior">
+        <div class="footer-contenido">
+
+            <!-- columna1 logo -->
+            <div class="footer-col">
+                <div class="footer-logo-box">
+                    <img src="img/logofeo.png" alt="Logo Bloom & Doom" class="footer-logo-img">
+                    <div class="footer-logo-texto">
+                        <h3 class="footer-titulo">BLOOM & DOOM</h3>
+                        <span class="footer-subtitulo">GESTOR DE INVERNADEROS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- columna2 contacto -->
+            <div class="footer-col">
+                <h4>CONTACTO</h4>
+                <p>Teléfono: +56 9 8100 3000</p>
+                <p>Twitter: @BloomAndDoom</p>
+                <p>Correo: contacto@bloomanddoom.cl</p>
+                <p>Ubicación: Av. hola 1234</p>
+            </div>
+
+            <!--columna3 legal -->
+            <div class="footer-col">
+                <h4>LEGAL</h4>
+                <a href="#">Términos y Condiciones</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Tratamiento de Datos</a>
+            </div>
+
+        </div>
+
+        <!--copyright abajo -->
+        <div class="footer-copy">
+            <p>© 2026 Bloom & Doom Co. Todos los derechos reservados. ö </p>
+        </div>
+    </footer>
+
+
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- /////////////////////////////////// aca termina la pgina por si acaso ///////////////////////////////////////////// -->
+    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+
+
+<!--
+
+commit no funciona aaaa
+
+xd
+
+-->
+
+<!-- hola data.js -->
+    <script src="js/data.js"></script>
+
+
+    </body>
+    </html>
