@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+
+<head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="../js/data.js"></script>
+    <script>
+        /*por si acaso, no hay un usuario_activo */
+        if (!sessionStorage.getItem('usuario_activo')) {
+            window.location.href = '../main.html';
+        }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Invernadero - Inicio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf7ea;
+            margin: 0;
+
+        }
+
+            /*
+        .navbar {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px;
+        }
+
+        .navbar .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+*/
+            /*
+
+        .nav-links a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+*/
+
+        .principaluser {
+            background-image: linear-gradient(rgba(234, 247, 234, 0.89),rgba(234, 247, 234, 0.89));
+            width: 100%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+            border-radius: 8px;
+            padding: 22px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+
+
+        }
+
+        .principaluser h1 {
+
+            color: #2e7d32;
+        }
+
+        .tarjetas {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tarjeta {
+            background-color: white;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 20px;
+            width: 150px;
+            text-align: center;
+        }
+
+        .tarjeta .numero {
+            font-size: 30px;
+            font-weight: bold;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .tarjeta .etiqueta {
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            .tarjetas {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+
+
+
+<body x-data="{
+    /*leemos a qn tiene la sesion iniciada en ssessionstorage*/
+    usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
+
+
+<!--    =================== Header =================== =================== =================== -->
+
+
+<header>
+    <div class="barra-verde" x-data="{
+        cerrarSesion() {
+        /*nos comemos el registro de usuario_activo*/
+        sessionStorage.removeItem('usuario_activo'); /*ojo q es sesionStorage. no localStorage*/
+
+        // Redirigimos de vuelta a la página principal
+        window.location.href = '../main.html';
+    }
+}">
+        <!-- el logo-->
+        <div class="logo-container">
+            <img src="../img/logofeo.png" alt="Logo Bloom & Doom" class="logo-img">
+            <div class="logo-texto">
+                <span class="titulo-empresa">BLOOM & DOOM</span>
+                <span class="subtitulo-empresa">GESTOR DE INVERNADEROS</span>
+            </div>
+        </div>
+
+        <!-- el usuario-->
+        <div class="elUsuarioActivo" >
+            <h1><span x-text="usuarioActivo && usuarioActivo.destino==='vistasAdmin/admin.html' ? 'Admin' : 'Usuario'"></span>: <span x-text="usuarioActivo.nombreUsuario"></span></h1>
+
+        </div>
+
+        <!-- Botón de cierre a la derecha (lleva al main) -->
+        <button type="button" class="btn-titulo" @click="cerrarSesion()">cerrar sesión</button>
+
+    </div>
+    <div class="barra-gris">
+        <!-- Navegación central -->
+        <nav class="tablas">
+            <a href="#" class="active">Inicio</a>
+            <a href="cultivosUser.html">Cultivos</a>
+            <a href="sensoresUser.html">Sensores</a>
+        </nav>
+    </div>
+
+</header>
+
+
+
+<!--  =================== las cosas =================== =================== =================== -->
+
+
+
+<!--
+    <nav class="navbar">
+    <span class="logo"> Mi Invernadero</span>
+    </nav>
+-->
+<main class="principal" >
+<div class="principaluser">
+
+
+    <h1>Resumen del invernadero</h1>
+
+    <section class="tarjetas">
+            <div class="tarjeta">
+            <span class="numero" id="numCultivos">0</span>
+            <span class="etiqueta">cultivos</span>
+            </div>
+
+            <div class="tarjeta">
+            <span class="numero" id="numSensores">0</span>
+            <span class="etiqueta">sensores</span>
+            </div>
+
+            <div class="tarjeta">
+            <span class="numero" id="numDatos">0</span>
+            <span class="etiqueta">datos recolectados</span>
+            </div>
+    </section>
+</div>
+</main>
+
+<!-- =================== =================== barra verde inferior =================== =================== -->
+
+
+
+<footer id="contacto" class="barra-verde-inferior">
+    <div class="footer-contenido">
+
+        <!-- columna1 logo -->
+        <div class="footer-col">
+            <div class="footer-logo-box">
+                <img src="../img/logofeo.png" alt="Logo Bloom & Doom" class="footer-logo-img">
+                <div class="footer-logo-texto">
+                    <h3 class="footer-titulo">BLOOM & DOOM</h3>
+                    <span class="footer-subtitulo">GESTOR DE INVERNADEROS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- columna2 contacto -->
+        <div class="footer-col">
+            <h4>CONTACTO</h4>
+            <p>Teléfono: +56 9 8100 3000</p>
+            <p>Twitter: @BloomAndDoom</p>
+            <p>Correo: contacto@bloomanddoom.cl</p>
+            <p>Ubicación: Av. hola 1234</p>
+        </div>
+
+        <!--columna3 legal -->
+        <div class="footer-col">
+            <h4>LEGAL</h4>
+            <a href="https://usagif.com/wp-content/uploads/gifs/handshake-43.gif" target="_blank"
+               onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Términos y Condiciones</a>
+            <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NLZTloeUF1b1pIMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gsKe9hyAuoZH2/giphy.gif" target="_blank"
+               onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Política de Privacidad</a>
+            <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzdrdHZzcGJ5cmxzbXlhcHRuZmp1NWQzeDJxbGtwY3Y1NXZpd2lidyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xUPGcml9WG8YmFhIgE/giphy.gif"
+               onclick="window.open(this.href, 'GifPopup', 'width=380,height=380,resizable=no,scrollbars=no'); return false;">Tratamiento de Datos</a>
+        </div>
+
+    </div>
+
+    <!--copyright abajo -->
+    <div class="footer-copy">
+        <p>© 2026 Bloom & Doom Co. Todos los derechos reservados. ö </p>
+    </div>
+</footer>
+
+
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////// aca termina la pgina por si acaso ///////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+</body>
+</html>

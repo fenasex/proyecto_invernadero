@@ -6,7 +6,12 @@
 
     <!-- le metí alphinejs -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
+    <!-- hola data.js -->
+    <script src="js/data.js"></script>
+    <script>
+        /*matamos a usuario activo*/
+        sessionStorage.removeItem('usuario_activo');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
@@ -44,7 +49,7 @@
 
 
          /* =================== header y barras d arriba =================== =================== =================== */
-
+         /*las del main son diferentes a las de las vistas*/
 
 
         header {
@@ -105,10 +110,10 @@
             background-color: #ebebebc0;
             height: 50px;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
             border-bottom: 1px solid #ccc;
-            font-size: 14px;
+            font-size: 16px;
             text-transform: uppercase;
             font-weight: bold;
 
@@ -410,8 +415,6 @@
 </head>
 <body>
 
-
-
     <!-- =================== =================== header =================== =================== -->
 
 
@@ -471,6 +474,10 @@
         /*si se ncuentra, lo mandamos para su pagina de admin o de usuario*/
         if (encontrado) {
             this.error = false;
+
+            /*guardamos al usuario q acaba de iniciar sesion en el sesion storage como usuario_activo*/
+            sessionStorage.setItem('usuario_activo', JSON.stringify(encontrado)); /*ojo q es sesionStorage. no localStorage este*/
+
             window.location.href = encontrado.destino;
                         }
 
@@ -503,11 +510,15 @@
         id: usuarios.length + 1,
         nombreUsuario: this.nuevoUsuarioInput.trim(),
         clave: this.nuevaClaveInput.trim(),
-        destino: this.admin ? 'admin.html' : 'inicio_usuario.html', /*elige vista*/
+        destino: this.admin ? 'vistasAdmin/admin.html' : 'vistasUser/inicio_usuario.html', /*elige vista (cambiado)*/
         cultivos: [],
         sensores: []
                     };
+
     usuarios.push(nuevo);
+
+    /*guardamos en la localstorage para que no se vaya al carajo*/
+    guardarUsuariosEnStorage();
 
     this.usuarioInput = this.nuevoUsuarioInput;
     this.claveInput = this.nuevaClaveInput;
@@ -590,9 +601,9 @@
                     </div>
                 </div>
 
-              <!--     enlaces rapidos, innecesarios con el registro hacido                 -->
-              <!--     <a href="admin.html" class="btn">Admin hardcodeado</a>               -->
-              <!--     <a href="inicio_usuario.html" class="btn">Usuario hardcodeado</a>    -->
+              <!--     enlaces rapidos, innecesarios con el registro hacido,y cambiado por si acaso     -->
+              <!--     <a href="vistasAdmin/admin.html" class="btn">Admin hardcodeado</a>               -->
+              <!--     <a href="vistasUser/inicio_usuario.html" class="btn">Usuario hardcodeado</a>     -->
 
               </div>
 
@@ -674,9 +685,12 @@
             <!--columna3 legal -->
             <div class="footer-col">
                 <h4>LEGAL</h4>
-                <a href="#">Términos y Condiciones</a>
-                <a href="#">Política de Privacidad</a>
-                <a href="#">Tratamiento de Datos</a>
+                <a href="https://usagif.com/wp-content/uploads/gifs/handshake-43.gif" target="_blank"
+                   onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Términos y Condiciones</a>
+                <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NLZTloeUF1b1pIMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gsKe9hyAuoZH2/giphy.gif" target="_blank"
+                   onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Política de Privacidad</a>
+                <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzdrdHZzcGJ5cmxzbXlhcHRuZmp1NWQzeDJxbGtwY3Y1NXZpd2lidyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xUPGcml9WG8YmFhIgE/giphy.gif"
+                   onclick="window.open(this.href, 'GifPopup', 'width=380,height=380,resizable=no,scrollbars=no'); return false;">Tratamiento de Datos</a>
             </div>
 
         </div>
@@ -690,7 +704,7 @@
 
 
     <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <!-- /////////////////////////////////// aca termina la pgina por si acaso ///////////////////////////////////////////// -->
+        <!-- /////////////////////////////////// aca termina la pgina por si acaso ///////////////////////////////////////////// -->
     <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 
@@ -705,9 +719,27 @@ xd
 
 -->
 
-<!-- hola data.js -->
-    <script src="js/data.js"></script>
 
 
     </body>
     </html>
+
+
+
+
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////                                   ///////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+<!--    =================== =================== -->
+<!--    ------------------- -------------------  -->
+
+
+
+
+
+
+
+
+

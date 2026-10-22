@@ -1,66 +1,283 @@
+
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth; /* literalmente es pa q se vea fluido */
+}
+
 body {
-font-family: Arial, sans-serif;
-background-color: #eaf7ea;
-margin: 0;
+    background-color: #ffffff00;
+
+    /*  image URL solo */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.pexels.com/photos/580900/pexels-photo-580900.jpeg');
+
+    background-size: cover;       /* hace que la imagen este en toda la pagina */
+    background-position: center;
+    background-repeat: no-repeat; /* esto es para que no se repita en bucle si no cubre */
+    background-attachment: fixed; /* mantiene la imagen fija al bajar */
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
 }
 
-.navbar {
-background-color: #4caf50;
-color: white;
-padding: 15px;
+
+
+
+
+
+
+
+
+/* =================== header y barras d arriba =================== =================== =================== */
+
+
+
+header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.navbar .logo {
-font-size: 20px;
-font-weight: bold;
+.barra-verde {
+    background-color: #a0cc5ab6;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #a0cc5a;
+
+    backdrop-filter: blur(10px);
+
 }
 
-.nav-links a {
-color: white;
-margin-right: 15px;
-text-decoration: none;
+/*   -------------------   */
+
+.elUsuarioActivo{
+    color: white;
+    align-items: center;
 }
 
-.nav-links a:hover {
-text-decoration: underline;
+
+
+/* logo (copiado del main.html)  */
+
+.logo-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    object-fit: cover; /* evita q la imagen se deforme*/
 }
 
-.dashboard {
-padding: 20px;
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.dashboard h1 {
-color: #2e7d32;
+.logo-texto {
+    display: flex;
+    flex-direction: column; /* subtitulo queda debajo de titulo */
+    color: #ffffff;
 }
 
-.tarjetas {
-display: flex;
-gap: 20px;
-margin-top: 20px;
+.titulo-empresa {
+    font-size: 17px;
+    font-weight: bold;   /* en negrita */
 }
 
-.tarjeta {
-background-color: white;
-border: 2px solid #4caf50;
-border-radius: 8px;
-padding: 20px;
-width: 150px;
-text-align: center;
+.subtitulo-empresa {
+    font-size: 10px;
 }
 
-.tarjeta .numero {
-font-size: 30px;
-font-weight: bold;
-color: #2e7d32;
-display: block;
+/* ------------------- ------------------- */
+
+.barra-gris {
+
+    background-color: #ebebebc0;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    backdrop-filter: blur(10px);
 }
 
-.tarjeta .etiqueta {
-color: #555;
+.barra-gris a {
+
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+.barra-gris a:hover {
+    background-color: rgb(141 165 157 / 0.5);
+    color: #122917;
 }
 
-@media (max-width: 600px) {
-.tarjetas {
-flex-direction: column;
+
+
+
+/*    tablas de navegacion                                      */
+/*    ok es un poco redundante pero le quería meter la          */
+/*    barra gris y no cambiar mucho los nombres que ya están    */
+
+.tablas {
+    display: flex;
+    height: 100%;
 }
+.tablas a {
+    text-decoration: none;
+    color: #346943;          /* hola color verde bonito a los links */
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    border-left: 1px solid #00000000; /* Líneas divisorias (seteadas a 0 pero se puede editar) */
+    border-right: 1px solid #00000000;
+    transition: background-color 0.2s;
 }
+.tablas a.active {
+    background-color: #e6e6e6; /* Pestaña activa blanca de inicio (de momento hardcodeada por la vista de inicio) */
+    font-weight: bold;
+}
+.tablas a.active:hover {
+    background-color: #caddca;
+    color: #122917;
+}
+
+
+
+/*  Botón de cierre de sesión  */
+
+.btn-titulo {
+    background-color: #4b8c5e;
+
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.btn-titulo:hover {
+    background-color: #8c4b4b;
+}
+
+
+
+/* =================== PAGINA COMO TAL =================== =================== ===================*/
+
+
+
+.principal {
+    flex: 1;
+
+}
+/*=================== parte de abajo (footer y tal) =================== =================== ===================*/
+
+
+
+.barra-verde-inferior {
+    background-color: #a0cc5ab6;
+    padding: 40px 20px;
+    margin-top: 50px;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+
+    color: white;
+
+    backdrop-filter: blur(4px);
+}
+
+.footer-contenido {
+    justify-content: space-between;
+    max-width: 1200px;
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    margin: 0 auto;
+    gap: 20px;
+
+    flex-wrap: wrap; /*segun vi esto es para q se vayan para abajo las cuestiones cuando la pagina se apachurre */
+
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column; /* hace q sean columnas (sorpresa) */
+    gap: 6px;
+    flex: 0 0 auto;
+    text-align: left;
+}
+.footer-col a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+.footer-col a:hover {
+    text-decoration: underline;  /*subrayadodellink*/
+}
+
+.footer-copy {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.15); /* lña linea  de arriba q separa el copy */
+    font-size: 11px;
+}
+
+.footer-logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-logo-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.footer-logo-texto {
+    display: flex;
+    flex-direction: column; /* subtitulo debajo del titulo */
+    justify-content: center; /* centrados respecto al logo */
+}
+
+.footer-titulo{
+    font-size: 24px
+}
+
+.footer-subtitulo {
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+/* ------------------- ------------------- ------------------- */
+
+/* espaceado */
+.spacer {
+    height: 40px;
+}
+
+

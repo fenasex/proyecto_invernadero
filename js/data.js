@@ -33,15 +33,15 @@ const datosSensor = [
 ];
 
 
-//=================== =================== =================== =================== ===================//
+//=================== usuarios =================== =================== ===================//
 
 
-// usuario que se verán en la pagina del administrados
-const usuarios = [
+//usuarios que se verán en la pagina del administrador
+let usuarios = [
 {id: 1,
 nombreUsuario: "Ftoloza",
-clave: "1111",                    // NUEVO
-destino: "admin.html",             // NUEVO
+clave: "1111",
+destino: "vistasAdmin/admin.html", //cambiado
 
 cultivos: cultivos,
 sensores: sensores,
@@ -52,8 +52,8 @@ sensores: sensores,
 {
 id :2,
 nombreUsuario: "AVega",
-clave: "2222",                    // NUEVO
-destino: "inicio_usuario.html",   // NUEVO
+clave: "2222",
+destino: "vistasUser/inicio_usuario.html", //cambiado
 
 
 cultivos: [
@@ -67,11 +67,11 @@ sensores: [
 //------------------- ------------------- ------------------- //
 
 {
-  //yo tambn queria estar
+
 
     id:3,
     nombreUsuario: "hola", clave: "3333",
-    destino: "admin.html",
+    destino: "vistasAdmin/admin.html", //cambiado
 
     cultivos: cultivos,
     sensores: sensores,
@@ -81,6 +81,22 @@ sensores: [
 ];
 
 
+//=================== ESTO ES PARA guardar datos de usuario  =================== ===================//
+
+//revisamos si existen usuarios guardados en la memoria del navegador
+const usuariosGuardados = localStorage.getItem('usuarios_app');
+
+if (usuariosGuardados) {
+    //si existen, reemplazamos a usuarios
+    usuarios = JSON.parse(usuariosGuardados);
+}
+
+   //guarda los cambios en el localstorage del registro
+function guardarUsuariosEnStorage() {
+    localStorage.setItem('usuarios_app', JSON.stringify(usuarios));
+}
+
+//porsiacaso eso de JSON.stingfy y JSON.parse q sale a veces es eso de que pasa de objeto a texto y al revés, porq así le da la ganta manejar los objetos a la web
+//según tengo entendido es proque como tal nopuuede manejar objetos, pero si Strings, entonces los cambiamos de tipo tdo el rato
+
 //=================== =================== =================== =================== ===================//
-
-

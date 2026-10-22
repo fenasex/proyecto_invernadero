@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>   <!--hoal alpinejs -->
+    <script src="../js/data.js"></script>
+    <script>
+        /*por si acaso, no hay un usuario_activo */
+        if (!sessionStorage.getItem('usuario_activo')) {
+            window.location.href = '../main.html';
+        }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">                                             <!--hoal style.css -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador - Invernadero</title>
+    <style>
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////////////      acá comienza el style        ///////////////////////////////////////////// */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #ffffff00; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.pexels.com/photos/580900/pexels-photo-580900.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+/* =================== PAGINA COMO TAL (Tarjetas) =================== =================== ===================*/
+
+
+
+.principaladmin {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra verticalmente */
+    gap: 30px; /* aca para modificar el espacio entre tarjetas */
+    padding: 60px 40px;
+    flex-wrap: wrap; /* Para que bajen si la pantalla es chica */
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+
+}
+
+        /* Estilo de las tarjetas */
+        .targeta {
+            flex: 1; 
+            min-width: 300px;
+            height: 450px; 
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+            border-radius: 4px; /* igual q en main para redondear los bordes */
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Colores de las tarjetas */
+        .targeta-usuarios {
+            background-color: rgb(247 168 168 / 0.8);
+        }
+
+        .targeta-registros {
+            background-color: rgb(203 230 160 / 0.65);
+        }
+
+        .targeta-metricas {
+            background-color: rgb(158 203 245 / 0.6);
+        }
+
+        .targeta h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            border-bottom: 1px solid #00000033; /* Línea divisoria sutil */
+            padding-bottom: 10px;
+        }
+
+        .targeta-content {
+            font-size: 16px;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Lista de cultivos (ejemplo placeholder) */
+        .targeta-content ul {
+            list-style-type: none;
+        }
+
+        .targeta-content ul li {
+            margin-bottom: 8px;
+        }
+
+
+
+/*=================== parte de abajo (footer y tal) =================== =================== ===================*/
+
+
+
+
+
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ///////////////////////////////////      acá termina el style         ///////////////////////////////////////////// */
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+    </style>
+</head>
+
+
+
+
+<body x-data="{
+    /*leemos a qn tiene la sesion iniciada en localstorage*/
+    usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
+<!--    =================== Header =================== =================== =================== -->
+
+
+    <header>
+        <div class="barra-verde" x-data="{
+        cerrarSesion() {
+        /*nos comemos el registro de usuario_activo*/
+        sessionStorage.removeItem('usuario_activo'); /*ojo q es sesionStorage. no localStorage*/
+
+        // Redirigimos de vuelta a la página principal
+        window.location.href = '../main.html';
+    }
+}">
+            <!-- el logo-->
+            <div class="logo-container">
+                <img src="../img/logofeo.png" alt="Logo Bloom & Doom" class="logo-img">
+                <div class="logo-texto">
+                    <span class="titulo-empresa">BLOOM & DOOM</span>
+                    <span class="subtitulo-empresa">GESTOR DE INVERNADEROS</span>
+                </div>
+            </div>
+
+            <!-- el usuario-->
+            <div class="elUsuarioActivo" >
+                <h1><span x-text="usuarioActivo && usuarioActivo.destino==='vistasAdmin/admin.html' ? 'Admin' : 'Usuario'"></span>: <span x-text="usuarioActivo.nombreUsuario"></span></h1>
+
+            </div>
+
+            <!-- Botón de cierre a la derecha (lleva al main) -->
+            <button type="button" class="btn-titulo" @click="cerrarSesion()">cerrar sesión</button>
+
+        </div>
+        <div class="barra-gris">
+            <!-- Navegación central -->
+            <nav class="tablas">
+                <a href="#" class="active">Inicio</a>
+                <a href="cultivos.html">Cultivos</a>
+                <a href="sensores.html">Sensores</a>
+                <a href="metricas.html">Métricas</a>
+            </nav>
+        </div>
+
+    </header>
+
+
+
+<!--  =================== tarjetas y las cosas =================== =================== =================== -->
+
+
+
+    <main class="principal">
+        <div class="principaladmin">
+
+        <!-- Tarjeta 1: Usuarios -->
+        <div class="targeta targeta-usuarios">
+            <h3>Usuarios</h3>
+            <div class="targeta-content">
+                <ul>
+                    <li>Admin (Tú)</li>
+                    <li>Juan Pérez</li>
+
+                    <li>María López</li>
+                    <li>Carlos Ruiz</li>
+                    <li>---</li>
+                    <li>---</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2: Registros -->
+        <div class="targeta targeta-registros">
+            <h3>Registros</h3>
+            <div class="targeta-content">
+                <p><strong>Últimos accesos:</strong></p>
+                <ul>
+                    <li>10:00 - Admin</li>
+                    <li>09:45 - Juan</li>
+                    <li>08:30 - María</li>
+                    <li>---</li>
+                    <li>---</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3: Métricas / Eliminación -->
+        <div class="targeta targeta-metricas">
+            <h3>Métricas y Gestión</h3>
+            <div class="targeta-content">
+                <p>Eliminación y creación de usuarios y registros.</p>
+                <!-- Gráfico simple visual -->
+                <div class="chart-placeholder">
+                    <div class="chart-line"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+
+
+<!-- =================== =================== barra verde inferior =================== =================== -->
+
+
+
+<footer id="contacto" class="barra-verde-inferior">
+    <div class="footer-contenido">
+
+        <!-- columna1 logo -->
+        <div class="footer-col">
+            <div class="footer-logo-box">
+                <img src="../img/logofeo.png" alt="Logo Bloom & Doom" class="footer-logo-img">
+                <div class="footer-logo-texto">
+                    <h3 class="footer-titulo">BLOOM & DOOM</h3>
+                    <span class="footer-subtitulo">GESTOR DE INVERNADEROS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- columna2 contacto -->
+        <div class="footer-col">
+            <h4>CONTACTO</h4>
+            <p>Teléfono: +56 9 8100 3000</p>
+            <p>Twitter: @BloomAndDoom</p>
+            <p>Correo: contacto@bloomanddoom.cl</p>
+            <p>Ubicación: Av. hola 1234</p>
+        </div>
+
+        <!--columna3 legal -->
+        <div class="footer-col">
+            <h4>LEGAL</h4>
+            <a href="https://usagif.com/wp-content/uploads/gifs/handshake-43.gif" target="_blank"
+               onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Términos y Condiciones</a>
+            <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NLZTloeUF1b1pIMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gsKe9hyAuoZH2/giphy.gif" target="_blank"
+               onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Política de Privacidad</a>
+            <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzdrdHZzcGJ5cmxzbXlhcHRuZmp1NWQzeDJxbGtwY3Y1NXZpd2lidyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xUPGcml9WG8YmFhIgE/giphy.gif"
+               onclick="window.open(this.href, 'GifPopup', 'width=380,height=380,resizable=no,scrollbars=no'); return false;">Tratamiento de Datos</a>
+        </div>
+
+    </div>
+
+    <!--copyright abajo -->
+    <div class="footer-copy">
+        <p>© 2026 Bloom & Doom Co. Todos los derechos reservados. ö </p>
+    </div>
+</footer>
+
+
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////// aca termina la pgina por si acaso ///////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+</body>
+</html>
