@@ -3,10 +3,13 @@
 <head>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>   <!--hoal alpinejs -->
     <script src="../js/data.js"></script>
+    <script src="../js/admin-panel.js"></script>
     <script>
-        /*por si acaso, no hay un usuario_activo */
-        if (!sessionStorage.getItem('usuario_activo')) {
+        const usuarioSesion = JSON.parse(sessionStorage.getItem('usuario_activo') || 'null');
+        if (!usuarioSesion) {
             window.location.href = '../main.html';
+        } else if (usuarioSesion.destino !== 'vistasAdmin/admin.html') {
+            window.location.href = '../vistasUser/inicio_usuario.html';
         }
     </script>
     <link rel="stylesheet" href="../css/style.css">                                             <!--hoal style.css -->
@@ -101,6 +104,7 @@
             font-size: 16px;
             color: #ffffff;
             line-height: 1.6;
+            overflow-y: auto;
         }
 
         /* Lista de cultivos (ejemplo placeholder) */
@@ -132,9 +136,7 @@
 
 
 
-<body x-data="{
-    /*leemos a qn tiene la sesion iniciada en localstorage*/
-    usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
+<body x-data="panelAdmin()">
 <!--    =================== Header =================== =================== =================== -->
 
 
@@ -190,44 +192,36 @@
 
         <!-- Tarjeta 1: Usuarios -->
         <div class="targeta targeta-usuarios">
-            <h3>Usuarios</h3>
+            <h3>Usuarios registrados (<span x-text="usuariosTotales()"></span>)</h3>
             <div class="targeta-content">
                 <ul>
-                    <li>Admin (Tú)</li>
-                    <li>Juan Pérez</li>
-
-                    <li>María López</li>
-                    <li>Carlos Ruiz</li>
-                    <li>---</li>
-                    <li>---</li>
+                    <template x-for="usuario in usuariosLista" :key="usuario.id">
+                        <li><span x-text="usuario.nombreUsuario"></span> — <span x-text="rolUsuario(usuario)"></span><span x-show="usuario.id === usuarioActivo.id"> (Tú)</span></li>
+                    </template>
                 </ul>
             </div>
         </div>
 
         <!-- Tarjeta 2: Registros -->
         <div class="targeta targeta-registros">
-            <h3>Registros</h3>
+            <h3>Últimos accesos</h3>
             <div class="targeta-content">
-                <p><strong>Últimos accesos:</strong></p>
                 <ul>
-                    <li>10:00 - Admin</li>
-                    <li>09:45 - Juan</li>
-                    <li>08:30 - María</li>
-                    <li>---</li>
-                    <li>---</li>
+                    <template x-for="(acceso, indice) in accesos.slice(0, 8)" :key="`${acceso.nombreUsuario}-${acceso.fecha}-${indice}`">
+                        <li><span x-text="fechaAcceso(acceso)"></span> — <span x-text="acceso.nombreUsuario"></span></li>
+                    </template>
+                    <li x-show="accesos.length === 0">Todavía no hay accesos registrados.</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Tarjeta 3: Métricas / Eliminación -->
+        <!-- Tarjeta 3: Resumen -->
         <div class="targeta targeta-metricas">
-            <h3>Métricas y Gestión</h3>
+            <h3>Resumen del invernadero</h3>
             <div class="targeta-content">
-                <p>Eliminación y creación de usuarios y registros.</p>
-                <!-- Gráfico simple visual -->
-                <div class="chart-placeholder">
-                    <div class="chart-line"></div>
-                </div>
+                <p>Cultivos totales: <strong x-text="cultivosTotales()"></strong></p>
+                <p>Sensores totales: <strong x-text="sensoresTotales()"></strong></p>
+                <a class="admin-enlace" href="metricas.html">Ver métricas y gestionar usuarios</a>
             </div>
         </div>
         </div>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="../js/data.js"></script>
+    <script src="../js/sensores.js"></script>
     <script>
         /*por si acaso, no hay un usuario_activo */
         if (!sessionStorage.getItem('usuario_activo')) {
@@ -17,9 +18,7 @@
 
     </style>
 </head>
-<body x-data="{
-    /*leemos a qn tiene la sesion iniciada en localstorage*/
-    usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
+<body x-data="gestorSensores()">
 <!--    =================== Header =================== =================== =================== -->
 <header>
     <div class="barra-verde" x-data="{
@@ -64,10 +63,43 @@
 
 <main class="principal">
     <div class="contenedor-principal">
-
-
-
-
+        <section class="sensor-panel">
+            <div class="sensor-barra-herramientas">
+                <input type="search" class="barra-busqueda" placeholder="Buscar sensor..." x-model="busqueda">
+            </div>
+            <p class="sensor-mensaje" role="status" x-show="mensaje" x-text="mensaje"></p>
+            <div class="sensor-tabla-contenedor">
+                <table class="sensor-tabla">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sensor</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Último valor</th>
+                            <th scope="col">Fecha de lectura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="sensor in sensoresFiltrados()" :key="sensor.nombre">
+                            <tr>
+                                <td>
+                                    <strong x-text="sensor.nombre"></strong>
+                                    <small x-text="detalleSensor(sensor).descripcion"></small>
+                                </td>
+                                <td x-text="detalleSensor(sensor).tipo || 'Sin categoría'"></td>
+                                <td>
+                                    <span x-show="ultimaLectura(sensor)" x-text="ultimaLectura(sensor) ? `${ultimaLectura(sensor).valor} ${detalleSensor(sensor).unidad || ''}` : ''"></span>
+                                    <span x-show="!ultimaLectura(sensor)">Sin datos</span>
+                                </td>
+                                <td x-text="ultimaLectura(sensor) ? ultimaLectura(sensor).fecha.replace('_', ' ') : 'Sin lectura'"></td>
+                            </tr>
+                        </template>
+                        <tr x-show="sensoresFiltrados().length === 0">
+                            <td colspan="4" class="sensor-sin-datos">No hay sensores que mostrar.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 </main>
 

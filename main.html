@@ -9,7 +9,7 @@
     <!-- hola data.js -->
     <script src="js/data.js"></script>
     <script>
-        /*matamos a usuario activo*/
+        /*matamos a usuario activo*/ 
         sessionStorage.removeItem('usuario_activo');
     </script>
     <meta charset="UTF-8">
@@ -477,6 +477,9 @@
 
             /*guardamos al usuario q acaba de iniciar sesion en el sesion storage como usuario_activo*/
             sessionStorage.setItem('usuario_activo', JSON.stringify(encontrado)); /*ojo q es sesionStorage. no localStorage este*/
+            const accesos = JSON.parse(localStorage.getItem('accesos_app') || '[]');
+            accesos.unshift({ nombreUsuario: encontrado.nombreUsuario, fecha: new Date().toISOString() });
+            localStorage.setItem('accesos_app', JSON.stringify(accesos.slice(0, 10)));
 
             window.location.href = encontrado.destino;
                         }
@@ -734,7 +737,6 @@ xd
 
 <!--    =================== =================== -->
 <!--    ------------------- -------------------  -->
-
 
 
 

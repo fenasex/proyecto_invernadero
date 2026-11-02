@@ -13,11 +13,18 @@ const cultivos = [
 //=================== =================== =================== =================== ===================//
 
 
-// Sensores del usuario
-const sensores = [
-  { nombre: "temperatura_1", descripcion: "temperatura del invernadero", unidad: "Celsius" },
-  { nombre: "humedad_1", descripcion: "humedad del invernadero", unidad: "%" }
+// Catálogo de sensores disponibles
+const catalogoSensores = [
+  { nombre: "temperatura_1", descripcion: "Temperatura del invernadero", unidad: "°C", tipo: "Ambientales" },
+  { nombre: "humedad_1", descripcion: "Humedad del invernadero", unidad: "%", tipo: "Ambientales" },
+  { nombre: "luminosidad_1", descripcion: "Luminosidad del invernadero", unidad: "lux", tipo: "Ambientales" },
+  { nombre: "humedad_suelo_1", descripcion: "Humedad del suelo", unidad: "%", tipo: "Suelo y sustrato" },
+  { nombre: "temperatura_suelo_1", descripcion: "Temperatura del suelo", unidad: "°C", tipo: "Suelo y sustrato" },
+  { nombre: "pH_sustrato_1", descripcion: "pH del sustrato", unidad: "pH", tipo: "Suelo y sustrato" }
 ];
+
+// Sensores asignados por defecto a los usuarios existentes
+const sensores = catalogoSensores.slice(0, 2);
 
 
 //=================== =================== =================== =================== ===================//
@@ -30,6 +37,14 @@ const datosSensor = [
 {fecha: "2026-09-08_20:00", sensorNombre: "temperatura_1", valor: 22.00},
 {fecha: "2026-09-08_09:00", sensorNombre: "humedad_1", valor: 55},
 {fecha: "2026-09-08_21:00", sensorNombre: "humedad_1", valor: 60},
+{fecha: "2026-09-08_10:00", sensorNombre: "luminosidad_1", valor: 780},
+{fecha: "2026-09-08_18:00", sensorNombre: "luminosidad_1", valor: 420},
+{fecha: "2026-09-08_10:00", sensorNombre: "humedad_suelo_1", valor: 48},
+{fecha: "2026-09-08_18:00", sensorNombre: "humedad_suelo_1", valor: 52},
+{fecha: "2026-09-08_10:00", sensorNombre: "temperatura_suelo_1", valor: 18.5},
+{fecha: "2026-09-08_18:00", sensorNombre: "temperatura_suelo_1", valor: 19.2},
+{fecha: "2026-09-08_10:00", sensorNombre: "pH_sustrato_1", valor: 6.2},
+{fecha: "2026-09-08_18:00", sensorNombre: "pH_sustrato_1", valor: 6.4},
 ];
 
 

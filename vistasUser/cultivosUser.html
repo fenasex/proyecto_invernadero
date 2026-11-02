@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="../js/data.js"></script>
+    <script src="../js/cultivos.js"></script>
     <script>
         /*por si acaso, no hay un usuario_activo */
         if (!sessionStorage.getItem('usuario_activo')) {
@@ -12,14 +13,12 @@
     <link rel="stylesheet" href="../css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cultivos - Invernadero</title>
     <style>
 
     </style>
 </head>
-<body x-data="{
-    /*leemos a qn tiene la sesion iniciada en localstorage*/
-    usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
+<body x-data="gestorCultivos()">
 <!--    =================== Header =================== =================== =================== -->
 <header>
     <div class="barra-verde" x-data="{
@@ -64,10 +63,37 @@
 
 <main class="principal">
     <div class="contenedor-principal">
-
-
-
-
+        <section class="cultivo-panel">
+            <div class="cultivo-barra-herramientas">
+                <input type="search" class="barra-busqueda" placeholder="Buscar cultivo..." x-model="busqueda">
+            </div>
+            <p class="cultivo-mensaje" role="status" x-show="mensaje" x-text="mensaje"></p>
+            <div class="cultivo-tabla-contenedor">
+                <table class="cultivo-tabla">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Fecha de cultivo</th>
+                            <th scope="col">Estacional</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="cultivo in cultivosFiltrados()" :key="cultivo.nombre">
+                            <tr>
+                                <td x-text="cultivo.nombre"></td>
+                                <td x-text="cultivo.tipo"></td>
+                                <td x-text="cultivo.fechacultivo"></td>
+                                <td x-text="cultivo.estacional ? 'Sí' : 'No'"></td>
+                            </tr>
+                        </template>
+                        <tr x-show="cultivosFiltrados().length === 0">
+                            <td colspan="4" class="cultivo-sin-datos">No hay cultivos que mostrar.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 </main>
 

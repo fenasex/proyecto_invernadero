@@ -3,6 +3,7 @@
 <head>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>   <!--hoal alpinejs -->
     <script src="../js/data.js"></script>
+    <script src="../js/cultivos.js"></script>
     <script>
         /*por si acaso, no hay un usuario_activo */
         if (!sessionStorage.getItem('usuario_activo')) {
@@ -187,9 +188,7 @@
 
     </style>
 </head>
-<body x-data="{
-/*leemos a qn tiene la sesion iniciada en localstorage*/
-usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
+<body x-data="gestorCultivos()">
 
 <!--    =================== Header =================== =================== =================== -->
 <header>
@@ -239,22 +238,55 @@ usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
         <section class="vista-tabla">
             <!-- Barra de herramientas -->
             <div class="barra-herramientas">
-                <button class="btn-accion">+</button>
-                <input type="text" class="barra-busqueda" placeholder="Buscar...">
-                <button class="btn-accion">▼</button>
+                <div class="cultivo-menu-contenedor" x-show="esAdministrador" @click.outside="mostrarMenu = false" @keydown.escape.window="mostrarMenu = false">
+                    <button type="button" class="btn-accion" aria-label="Añadir cultivo" :aria-expanded="mostrarMenu" @click="mostrarMenu = !mostrarMenu; mensaje = ''">+</button>
+                    <div class="cultivo-submenu" x-show="mostrarMenu" x-transition>
+                        <template x-for="tipo in tiposDisponibles()" :key="tipo">
+                            <section class="cultivo-submenu-grupo">
+                                <h3 x-text="tipo"></h3>
+                                <template x-for="cultivo in cultivosDisponibles(tipo)" :key="cultivo.id">
+                                    <button type="button" class="cultivo-opcion" @click="agregarCultivo(cultivo)" :disabled="estaCompartido(cultivo)">
+                                        <span x-text="cultivo.nombre"></span>
+                                        <span x-text="estaCompartido(cultivo) ? 'Visible para usuarios' : cultivo.fechacultivo"></span>
+                                    </button>
+                                </template>
+                            </section>
+                        </template>
+                    </div>
+                </div>
+                <input type="search" class="barra-busqueda" placeholder="Buscar cultivo..." x-model="busqueda">
             </div>
 
-            <!-- Encabezados de la tabla (CON Es estacional) -->
-            <div class="tabla-header">
-                <div class="col-nombre">Nombre</div>
-                <div class="col-tipo">Tipo</div>
-                <div class="col-fecha">Fecha</div>
-                <div class="col-estacional">Es estacional</div>
-            </div>
+            <p class="cultivo-mensaje" role="status" x-show="mensaje" x-text="mensaje"></p>
 
-            <!-- Cuerpo de la tabla -->
-            <div class="tabla-cuerpo">
-                <!-- Aquí irían las filas de datos -->
+            <div class="cultivo-tabla-contenedor">
+                <table class="cultivo-tabla">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Fecha de cultivo</th>
+                            <th scope="col">Estacional</th>
+                            <th scope="col" x-show="esAdministrador">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="cultivo in cultivosFiltrados()" :key="cultivo.nombre">
+                            <tr>
+                                <td x-text="cultivo.nombre"></td>
+                                <td x-text="cultivo.tipo"></td>
+                                <td x-text="cultivo.fechacultivo"></td>
+                                <td x-text="cultivo.estacional ? 'Sí' : 'No'"></td>
+                                <td x-show="esAdministrador">
+                                    <button type="button" class="cultivo-btn-eliminar" @click="eliminarCultivo(cultivo.nombre)" :aria-label="'Eliminar ' + cultivo.nombre">Eliminar</button>
+                                </td>
+                            </tr>
+                        </template>
+                        <tr x-show="cultivosFiltrados().length === 0">
+                            <td :colspan="esAdministrador ? 5 : 4" class="cultivo-sin-datos">No hay cultivos que mostrar.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
         </div>

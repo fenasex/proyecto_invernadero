@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>   <!--hoal alpinejs -->
     <link rel="stylesheet" href="../css/style.css">                                             <!--hoal style.css -->
     <script src="../js/data.js"></script>
+    <script src="../js/admin-panel.js"></script>
     <script>
-        /*por si acaso, no hay un usuario_activo */
-        if (!sessionStorage.getItem('usuario_activo')) {
+         /*por si acaso, no hay un usuario_activo */
+        const usuarioSesion = JSON.parse(sessionStorage.getItem('usuario_activo') || 'null');
+        if (!usuarioSesion) {
             window.location.href = '../main.html';
+        } else if (usuarioSesion.destino !== 'vistasAdmin/admin.html') {
+            window.location.href = '../vistasUser/inicio_usuario.html';
         }
     </script>
     <meta charset="UTF-8">
@@ -18,9 +22,7 @@
 
     </style>
 </head>
-<body x-data="{
-/*leemos a qn tiene la sesion iniciada en localstorage*/
-usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
+<body x-data="panelAdmin()">
 
 <!--    =================== Header =================== =================== =================== -->
 <header>
@@ -67,11 +69,84 @@ usuarioActivo: JSON.parse(sessionStorage.getItem('usuario_activo')),}">
 <!--  =================== las cosas =================== =================== =================== -->
 
 <main class="principal">
-    <div class="contenedor-principal">
+    <div class="contenedor-principal admin-metricas">
+        <section class="admin-resumen" aria-label="Resumen de métricas">
+            <article class="admin-metrica">
+                <h2>Cultivos totales</h2>
+                <p x-text="cultivosTotales()"></p>
+            </article>
+            <article class="admin-metrica">
+                <h2>Sensores totales</h2>
+                <p x-text="sensoresTotales()"></p>
+            </article>
+            <article class="admin-metrica">
+                <h2>Usuarios registrados</h2>
+                <p x-text="usuariosTotales()"></p>
+            </article>
+        </section>
 
+        <section class="admin-gestion-usuarios">
+            <div class="admin-gestion-cabecera">
+                <div>
+                    <h2>Gestión de usuarios</h2>
+                    <p>Crea cuentas de usuario o administrador y administra sus permisos.</p>
+                </div>
+            </div>
 
+            <form class="admin-form-usuario" @submit.prevent="crearUsuario()">
+                <label>
+                    Nombre de usuario
+                    <input type="text" x-model="nombreNuevo" autocomplete="off" required>
+                </label>
+                <label>
+                    Contraseña
+                    <input type="password" x-model="claveNueva" required>
+                </label>
+                <label>
+                    Privilegios
+                    <select x-model="rolNuevo">
+                        <option value="usuario">Usuario</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </label>
+                <button type="submit" class="admin-btn-crear">Crear usuario</button>
+            </form>
 
+            <p class="admin-mensaje" role="status" x-show="mensaje" x-text="mensaje"></p>
 
+            <div class="admin-usuarios-tabla-contenedor">
+                <table class="admin-usuarios-tabla">
+                    <thead>
+                        <tr>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="usuario in usuariosLista" :key="usuario.id">
+                            <tr>
+                                <td x-text="usuario.nombreUsuario"></td>
+                                <td x-text="rolUsuario(usuario)"></td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="admin-btn-eliminar"
+                                        @click="eliminarUsuario(usuario)"
+                                        :disabled="usuario.id === usuarioActivo.id && usuario.nombreUsuario === usuarioActivo.nombreUsuario"
+                                        :aria-label="'Eliminar usuario ' + usuario.nombreUsuario">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                        <tr x-show="usuariosLista.length === 0">
+                            <td colspan="3" class="admin-sin-usuarios">No hay usuarios registrados.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 </main>
 
