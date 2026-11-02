@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>   <!--hoal alpinejs -->
+    <link rel="stylesheet" href="../css/style.css">                                             <!--hoal style.css -->
+    <script src="../js/data.js"></script>
+    <script src="../js/admin-panel.js"></script>
+    <script>
+         /*por si acaso, no hay un usuario_activo */
+        const usuarioSesion = JSON.parse(sessionStorage.getItem('usuario_activo') || 'null');
+        if (!usuarioSesion) {
+            window.location.href = '../main.html';
+        } else if (usuarioSesion.destino !== 'vistasAdmin/admin.html') {
+            window.location.href = '../vistasUser/inicio_usuario.html';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas</title>
+    <style>
+
+
+    </style>
+</head>
+<body x-data="panelAdmin()">
+
+<!--    =================== Header =================== =================== =================== -->
+<header>
+    <div class="barra-verde" x-data="{
+        cerrarSesion() {
+        /*nos comemos el registro de usuario_activo*/
+        sessionStorage.removeItem('usuario_activo'); /*ojo q es sesionStorage. no localStorage*/
+
+        // Redirigimos de vuelta a la página principal
+        window.location.href = '../main.html';
+    }
+}">
+        <!-- el logo-->
+        <div class="logo-container">
+            <img src="../img/logofeo.png" alt="Logo Bloom & Doom" class="logo-img">
+            <div class="logo-texto">
+                <span class="titulo-empresa">BLOOM & DOOM</span>
+                <span class="subtitulo-empresa">GESTOR DE INVERNADEROS</span>
+            </div>
+        </div>
+
+        <!-- el usuario-->
+        <div class="elUsuarioActivo" >
+            <h1><span x-text="usuarioActivo && usuarioActivo.destino==='vistasAdmin/admin.html' ? 'Admin' : 'Usuario'"></span>: <span x-text="usuarioActivo.nombreUsuario"></span></h1>
+
+        </div>
+
+        <!-- Botón de cierre a la derecha (lleva al main) -->
+        <button type="button" class="btn-titulo" @click="cerrarSesion()">cerrar sesión</button>
+
+    </div>
+    <div class="barra-gris">
+        <!-- Navegación central -->
+        <nav class="tablas">
+            <a href="admin.html" >Inicio</a>
+            <a href="cultivos.html">Cultivos</a>
+            <a href="sensores.html" >Sensores</a>
+            <a href="#" class="active">Métricas</a>
+        </nav>
+    </div>
+
+</header>
+
+<!--  =================== las cosas =================== =================== =================== -->
+
+<main class="principal">
+    <div class="contenedor-principal admin-metricas">
+        <section class="admin-resumen" aria-label="Resumen de métricas">
+            <article class="admin-metrica">
+                <h2>Cultivos totales</h2>
+                <p x-text="cultivosTotales()"></p>
+            </article>
+            <article class="admin-metrica">
+                <h2>Sensores totales</h2>
+                <p x-text="sensoresTotales()"></p>
+            </article>
+            <article class="admin-metrica">
+                <h2>Usuarios registrados</h2>
+                <p x-text="usuariosTotales()"></p>
+            </article>
+        </section>
+
+        <section class="admin-gestion-usuarios">
+            <div class="admin-gestion-cabecera">
+                <div>
+                    <h2>Gestión de usuarios</h2>
+                    <p>Crea cuentas de usuario o administrador y administra sus permisos.</p>
+                </div>
+            </div>
+
+            <form class="admin-form-usuario" @submit.prevent="crearUsuario()">
+                <label>
+                    Nombre de usuario
+                    <input type="text" x-model="nombreNuevo" autocomplete="off" required>
+                </label>
+                <label>
+                    Contraseña
+                    <input type="password" x-model="claveNueva" required>
+                </label>
+                <label>
+                    Privilegios
+                    <select x-model="rolNuevo">
+                        <option value="usuario">Usuario</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </label>
+                <button type="submit" class="admin-btn-crear">Crear usuario</button>
+            </form>
+
+            <p class="admin-mensaje" role="status" x-show="mensaje" x-text="mensaje"></p>
+
+            <div class="admin-usuarios-tabla-contenedor">
+                <table class="admin-usuarios-tabla">
+                    <thead>
+                        <tr>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="usuario in usuariosLista" :key="usuario.id">
+                            <tr>
+                                <td x-text="usuario.nombreUsuario"></td>
+                                <td x-text="rolUsuario(usuario)"></td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="admin-btn-eliminar"
+                                        @click="eliminarUsuario(usuario)"
+                                        :disabled="usuario.id === usuarioActivo.id && usuario.nombreUsuario === usuarioActivo.nombreUsuario"
+                                        :aria-label="'Eliminar usuario ' + usuario.nombreUsuario">
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                        <tr x-show="usuariosLista.length === 0">
+                            <td colspan="3" class="admin-sin-usuarios">No hay usuarios registrados.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- =================== =================== barra verde inferior =================== =================== -->
+
+
+
+<footer id="contacto" class="barra-verde-inferior">
+    <div class="footer-contenido">
+
+        <!-- columna1 logo -->
+        <div class="footer-col">
+            <div class="footer-logo-box">
+                <img src="../img/logofeo.png" alt="Logo Bloom & Doom" class="footer-logo-img">
+                <div class="footer-logo-texto">
+                    <h3 class="footer-titulo">BLOOM & DOOM</h3>
+                    <span class="footer-subtitulo">GESTOR DE INVERNADEROS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- columna2 contacto -->
+        <div class="footer-col">
+            <h4>CONTACTO</h4>
+            <p>Teléfono: +56 9 8100 3000</p>
+            <p>Twitter: @BloomAndDoom</p>
+            <p>Correo: contacto@bloomanddoom.cl</p>
+            <p>Ubicación: Av. hola 1234</p>
+        </div>
+
+        <!--columna3 legal -->
+        <div class="footer-col">
+            <h4>LEGAL</h4>
+            <a href="https://usagif.com/wp-content/uploads/gifs/handshake-43.gif" target="_blank"
+               onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Términos y Condiciones</a>
+            <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3NLZTloeUF1b1pIMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gsKe9hyAuoZH2/giphy.gif" target="_blank"
+               onclick="window.open(this.href, 'GifPopup', 'width=200,height=300,resizable=no,scrollbars=no'); return false;">Política de Privacidad</a>
+            <a href="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzdrdHZzcGJ5cmxzbXlhcHRuZmp1NWQzeDJxbGtwY3Y1NXZpd2lidyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xUPGcml9WG8YmFhIgE/giphy.gif"
+               onclick="window.open(this.href, 'GifPopup', 'width=380,height=380,resizable=no,scrollbars=no'); return false;">Tratamiento de Datos</a>
+        </div>
+
+    </div>
+
+    <!--copyright abajo -->
+    <div class="footer-copy">
+        <p>© 2026 Bloom & Doom Co. Todos los derechos reservados. ö </p>
+    </div>
+</footer>
+
+
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////// aca termina la pgina por si acaso ///////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+</body>
+</html>
